@@ -38,15 +38,19 @@ type Weather struct {
 
 func main() {
 	fmt.Println("Ready to go")
+	weather()
 
-	q:= "Pune"
-	key:="<key>"
+}
 
-	if len(os.Args) >=2 {
+func weather() {
+	q := "Pune"
+	key := "<key>"
+
+	if len(os.Args) >= 2 {
 		q = os.Args[1]
 	}
 
-	res, err := http.Get("http://api.weatherapi.com/v1/forecast.json?key="+key+"&q="+q+"&days=1&aqi=no&alerts=no")
+	res, err := http.Get("http://api.weatherapi.com/v1/forecast.json?key=" + key + "&q=" + q + "&days=1&aqi=no&alerts=no")
 	if err != nil {
 		panic(err)
 	}
@@ -89,13 +93,13 @@ func main() {
 		// 	continue
 		// }
 
-		message:=fmt.Sprintf("%s -  %.0fC,  %.0f%%, %s\n",
+		message := fmt.Sprintf("%s -  %.0fC,  %.0f%%, %s\n",
 			date.Format("15:04"),
 			hour.TempC, hour.ChanceOfRain, hour.Condition.Text)
 
-			if hour.ChanceOfRain > 410 {
+		if hour.ChanceOfRain < 70 {
 			fmt.Print(message)
-		}	else {
+		} else {
 			color.Red(message)
 		}
 
